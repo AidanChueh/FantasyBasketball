@@ -10,27 +10,27 @@ type Team struct {
 	players []player.Player
 }
 
-// Create creates and returns a new team
-func Create(newName string) Team {
-	newTeam := Team{name: newName}
-	return newTeam
+// Create creates and returns a team
+func Create(name string) Team {
+	team := Team{name: name}
+	return team
 }
 
-// UpdateName updates the name of the team
-func (pointerToTeam *Team) UpdateName(newName string) {
-	(*pointerToTeam).name = newName
+// Players returns the players
+func (t *Team) Players() []player.Player {
+	return (*t).players
 }
 
 // AddPlayer adds a player to the team
-func (pointerToTeam *Team) AddPlayer(newPlayer player.Player) {
-	(*pointerToTeam).players = append((*pointerToTeam).players, newPlayer)
+func (t *Team) AddPlayer(player player.Player) {
+	(*t).players = append((*t).players, player)
 }
 
 // DeletePlayer deletes a player on the team
-func (pointerToTeam *Team) DeletePlayer(name string) {
-	for i, player := range (*pointerToTeam).players {
-		if name == player.Name {
-			(*pointerToTeam).players = append((*pointerToTeam).players[:i], (*pointerToTeam).players[i+1:]...)
+func (t *Team) DeletePlayer(name string) {
+	for i, player := range (*t).players {
+		if name == player.Name() {
+			(*t).players = append((*t).players[:i], (*t).players[i+1:]...)
 		}
 	}
 }

@@ -1,26 +1,67 @@
 package player
 
+import (
+	"fmt"
+)
+
+// -----------
+// Type Player
+// -----------
+
 // Player represents a basketball player
 type Player struct {
-	// Name represents the name of a basketball player
-	Name string
+	name string
 
-	// Position represents the position of a basketball player
-	Position string
+	position position
 }
 
-// Create creates and returns a new player
-func Create(newName string, newPosition string) Player {
-	newPlayer := Player{Name: newName, Position: newPosition}
-	return newPlayer
+// Create creates and returns a  player
+func Create(name string, position position) Player {
+	if position.isValid() {
+		player := Player{name: name, position: position}
+		return player
+	}
+	fmt.Println("Invalid position")
+	player := Player{name: name, position: ""}
+	return player
 }
 
-// UpdateName updates the name of the player
-func (pointerToPlayer *Player) UpdateName(newName string) {
-	(*pointerToPlayer).Name = newName
+// Name returns the name
+func (p *Player) Name() string {
+	return (*p).name
 }
 
-// UpdatePosition updates the position of the player
-func (pointerToPlayer *Player) UpdatePosition(newPosition string) {
-	(*pointerToPlayer).Position = newPosition
+// Position returns the position
+func (p *Player) Position() position {
+	return (*p).position
+}
+
+// SetPosition sets the position
+func (p *Player) SetPosition(position position) {
+	if position.isValid() {
+		(*p).position = position
+	} else {
+		fmt.Println("Invalid position")
+	}
+}
+
+// -------------
+// Type Position
+// -------------
+
+type position string
+
+const (
+	pointGuard    position = "PG"
+	shootingGuard position = "SG"
+	smallForward  position = "SF"
+	powerForward  position = "PF"
+	center        position = "C"
+)
+
+func (p position) isValid() bool {
+	if p == pointGuard || p == shootingGuard || p == smallForward || p == powerForward || p == center {
+		return true
+	}
+	return false
 }
