@@ -1,9 +1,5 @@
 package player
 
-import (
-	"fmt"
-)
-
 // -----------
 // Type Player
 // -----------
@@ -12,56 +8,58 @@ import (
 type Player struct {
 	name string
 
-	position position
+	position Position
 }
 
-// Create creates and returns a  player
-func Create(name string, position position) Player {
-	if position.isValid() {
-		player := Player{name: name, position: position}
-		return player
+// Create creates and returns a player
+func Create(name string, position Position) Player {
+	if name == "" {
+		return Player{name: "", position: position}
 	}
-	fmt.Println("Invalid position")
-	player := Player{name: name, position: ""}
-	return player
+	if !position.IsValid() {
+		return Player{name: name, position: 0}
+	}
+	return Player{name: name, position: position}
 }
 
 // Name returns the name
 func (p *Player) Name() string {
-	return (*p).name
+	return p.name
 }
 
 // Position returns the position
-func (p *Player) Position() position {
-	return (*p).position
+func (p *Player) Position() Position {
+	return p.position
 }
 
 // SetPosition sets the position
-func (p *Player) SetPosition(position position) {
-	if position.isValid() {
-		(*p).position = position
-	} else {
-		fmt.Println("Invalid position")
-	}
+func (p *Player) SetPosition(position Position) {
+	p.position = position
 }
 
 // -------------
 // Type Position
 // -------------
 
-type position string
+// Position is the position of the basketball player
+type Position int
 
+// Possible position values
 const (
-	pointGuard    position = "PG"
-	shootingGuard position = "SG"
-	smallForward  position = "SF"
-	powerForward  position = "PF"
-	center        position = "C"
+	PointGuard Position = iota + 1
+	ShootingGuard
+	SmallForward
+	PowerForward
+	Center
 )
 
-func (p position) isValid() bool {
-	if p == pointGuard || p == shootingGuard || p == smallForward || p == powerForward || p == center {
-		return true
+// IsValid determines whether the position is valid
+func (p Position) IsValid() bool {
+	if p < PointGuard || p > Center {
+		return false
 	}
-	return false
+
+	return true
 }
+
+// Print array with numbers corresponding to positions

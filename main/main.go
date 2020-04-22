@@ -1,16 +1,10 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/AidanChueh/fantasy-basketball/packages/player"
-	"github.com/AidanChueh/fantasy-basketball/packages/team"
-)
+import "github.com/AidanChueh/fantasy-basketball/packages/draft"
 
 func main() {
-	steph := player.Create("Stephen Curry", 1)
-	fmt.Println(steph)
+	draft := draft.Create("playerlist")
+	draft.Start()
+	draft.PrintTeams()
 
-	warriors := team.Create("Warriors")
-	fmt.Println(warriors)
 }
