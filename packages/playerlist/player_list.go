@@ -103,23 +103,22 @@ func (p PlayerList) Choose() {
 
 // Contains determines whether the player list contains the player
 func (p PlayerList) Contains(name string) bool {
-	contains := false
-
 	for _, player := range p {
 		if player.Name() == name {
-			contains = true
+			return true
+			// saves time instead of running through entire list
 		}
 	}
-
-	return contains
+	return false
 }
 
 // Remove removes a player from the player list
-func (p PlayerList) Remove(name string) {
-	for i, player := range p {
+func (p *PlayerList) Remove(name string) {
+	for i, player := range *p {
 		if player.Name() == name {
-			p = append(p[:i], p[i+1:]...)
+			*p = append((*p)[:i], (*p)[i+1:]...)
 		}
+
 	}
 }
 
